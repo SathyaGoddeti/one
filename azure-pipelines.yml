@@ -1,0 +1,10 @@
+
+trigger:
+- master
+
+pool:
+  name: SathyaAgent
+
+steps:
+- script: echo "Hello World"
+  displayName: 'Hello World'
