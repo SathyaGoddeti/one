@@ -8,21 +8,3 @@ pool:
 steps:
 - script: echo "Hello World"
   displayName: 'Hello World'
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-- task: TomcatDeployment@1
-  inputs:
-    TomcatUrl: 'http://20.51.201.201:8080'
-    Username: 'tomcat'
-    Password: 'admin@123'
-    Warfile: 'target/myweb-8.7.3.war'
-    Context: '/myapp'
-    ServerVersion: '7OrAbove'
