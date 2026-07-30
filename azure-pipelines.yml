@@ -1,4 +1,3 @@
-
 trigger:
 - master
 
@@ -6,5 +5,33 @@ pool:
   name: SathyaAgent
 
 steps:
+
 - script: echo "Hello World"
   displayName: 'Hello World'
+
+- task: SonarQubePrepare@8
+  inputs:
+    SonarQube: 'MySonar'
+    scannerMode: 'other'
+    extraProperties: |
+      sonar.projectKey=MyProject
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    codeCoverageToolOption: 'JaCoCo'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+- task: SonarQubePublish@8
+  inputs:
+    pollingTimeoutSec: '300'
